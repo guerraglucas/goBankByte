@@ -24,7 +24,7 @@ func printIntro() {
 }
 
 func readAccountData() ContaCorrente {
-	var contaCorrente ContaCorrente
+	var contaCorrente *ContaCorrente = new(ContaCorrente)
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Println("Informe o titular da conta:")
@@ -37,7 +37,7 @@ func readAccountData() ContaCorrente {
 	fmt.Println("Informe o saldo da conta:")
 	fmt.Scan(&contaCorrente.saldo)
 
-	return contaCorrente
+	return *contaCorrente
 
 }
 
