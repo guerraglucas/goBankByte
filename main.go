@@ -10,7 +10,14 @@ func main() {
 	printIntro()
 	contaCorrente := readAccountData()
 	titular, agencia, conta, saldo := contaCorrente.titular, contaCorrente.agencia, contaCorrente.conta, contaCorrente.saldo
+	var valor int = 45
+	var ptr *int = &valor
 
+	fmt.Println("valor do ponteiro: ", *ptr)
+	fmt.Println("valor da variavel: ", valor)
+
+	fmt.Println("endereco do ponteiro: ", &ptr)
+	fmt.Println("endereco da variavel: ", &valor)
 	fmt.Println("Titular:", titular)
 	fmt.Println("Agência:", agencia)
 	fmt.Println("Conta:", conta)
@@ -23,21 +30,24 @@ func printIntro() {
 	fmt.Println("Informe os dados da conta")
 }
 
-func readAccountData() ContaCorrente {
+func readAccountData() *ContaCorrente {
 	var contaCorrente *ContaCorrente = new(ContaCorrente)
 	reader := bufio.NewReader(os.Stdin)
+	// Aqui eu estou passando o endereço de memória da variável contaCorrente
+	objeto := *contaCorrente
 
 	fmt.Println("Informe o titular da conta:")
 	titular, _ := reader.ReadString('\n')
-	contaCorrente.titular = titular
-	fmt.Println("Informe o número da agência:")
-	fmt.Scan(&contaCorrente.agencia)
-	fmt.Println("Informe o número da conta:")
-	fmt.Scan(&contaCorrente.conta)
-	fmt.Println("Informe o saldo da conta:")
-	fmt.Scan(&contaCorrente.saldo)
+	objeto.titular = titular
 
-	return *contaCorrente
+	fmt.Println("Informe o número da agência:")
+	fmt.Scan(&objeto.agencia)
+	fmt.Println("Informe o número da conta:")
+	fmt.Scan(&objeto.conta)
+	fmt.Println("Informe o saldo da conta:")
+	fmt.Scan(&objeto.saldo)
+
+	return &objeto
 
 }
 
