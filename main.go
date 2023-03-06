@@ -70,13 +70,13 @@ func (r *ContaCorrente) Withdraw(saque float64) float64 {
 	if r.ValidateWithdraw(saque) {
 		r.saldo = r.saldo - saque
 	} else {
-		fmt.Println("Saldo insuficiente")
+		fmt.Println("Não foi possível realizar o saque")
 	}
 	return r.saldo
 }
 
 func (r *ContaCorrente) ValidateWithdraw(saque float64) bool {
-	if saque > r.saldo {
+	if saque > r.saldo && saque < 0 {
 		return false
 	}
 	return true
