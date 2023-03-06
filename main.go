@@ -1,7 +1,8 @@
 package main
 
 import (
-	"aula-2-oop-go/accounts"
+	a "aula-2-oop-go/accounts"
+	u "aula-2-oop-go/users"
 	"bufio"
 	"fmt"
 	"os"
@@ -9,8 +10,11 @@ import (
 
 func main() {
 	printIntro()
-	contaCorrente := accounts.ContaCorrente{Titular: "Lucas", Agencia: 123, Conta: 123, Saldo: 100}
-	contaDestinoTransferencia := accounts.ContaCorrente{Titular: "Rhe", Agencia: 123, Conta: 123, Saldo: 100}
+	userLucas := u.Owner{Name: "Lucas", Age: 28, Email: "lucasguerra123@emai.com"}
+	userRhe := u.Owner{Name: "Rhe", Age: 26, Email: "rhe123@emai.com"}
+
+	contaCorrente := a.ContaCorrente{Titular: userLucas, Agencia: 123, Conta: 123, Saldo: 100}
+	contaDestinoTransferencia := a.ContaCorrente{Titular: userRhe, Agencia: 123, Conta: 123, Saldo: 100}
 
 	printMenu()
 	operationSelected := readOperationSelected()
@@ -48,14 +52,14 @@ func readOperationSelected() int {
 	return operationSelected
 }
 
-func readAccountData() *accounts.ContaCorrente {
-	var contaCorrente *accounts.ContaCorrente = new(accounts.ContaCorrente)
+func readAccountData() *a.ContaCorrente {
+	var contaCorrente *a.ContaCorrente = new(a.ContaCorrente)
 	reader := bufio.NewReader(os.Stdin)
 	objeto := *contaCorrente
 
 	fmt.Println("Informe o titular da conta:")
 	titular, _ := reader.ReadString('\n')
-	objeto.Titular = titular
+	objeto.Titular.Name = titular
 
 	fmt.Println("Informe o número da agência:")
 	fmt.Scan(&objeto.Agencia)
@@ -68,7 +72,7 @@ func readAccountData() *accounts.ContaCorrente {
 
 }
 
-func makeWithdraw(contaCorrente *accounts.ContaCorrente) {
+func makeWithdraw(contaCorrente *a.ContaCorrente) {
 	fmt.Println("Informe o valor do saque:")
 	var saque float64
 	fmt.Scan(&saque)
@@ -76,7 +80,7 @@ func makeWithdraw(contaCorrente *accounts.ContaCorrente) {
 	fmt.Println("Saldo após saque:", contaCorrente.Saldo)
 }
 
-func makeDeposit(contaCorrente *accounts.ContaCorrente) {
+func makeDeposit(contaCorrente *a.ContaCorrente) {
 	fmt.Println("Informe o valor do depósito:")
 	var deposito float64
 	fmt.Scan(&deposito)
@@ -84,7 +88,7 @@ func makeDeposit(contaCorrente *accounts.ContaCorrente) {
 	fmt.Println("Saldo após depósito:", contaCorrente.Saldo)
 }
 
-func makeTransfer(contaCorrente *accounts.ContaCorrente, contaDestino *accounts.ContaCorrente) {
+func makeTransfer(contaCorrente *a.ContaCorrente, contaDestino *a.ContaCorrente) {
 	fmt.Println("Informe o valor da transferência:")
 	var valor float64
 	fmt.Scan(&valor)

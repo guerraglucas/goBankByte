@@ -1,9 +1,12 @@
 package accounts
 
-import "fmt"
+import (
+	u "aula-2-oop-go/users"
+	"fmt"
+)
 
 type ContaCorrente struct {
-	Titular string
+	Titular u.Owner
 	Agencia int
 	Conta   int
 	Saldo   float64
