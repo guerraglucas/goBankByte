@@ -1,3 +1,12 @@
+// This is the main package of a program that prints out information about a
+//bank account. It imports the packages "bufio", "fmt" and "os". The main
+//function calls the printIntro() and readAccountData() functions, then prints
+// out the account data (titular, agencia, conta and saldo) as well as the
+//value of a pointer and variable. Finally, it prints out the address of both
+//the pointer and variable. The readAccountData() function reads in data from
+//the user (titular, agencia, conta and saldo) using bufio.NewReader(os.Stdin)
+// and stores them in a ContaCorrente struct type.
+
 package main
 
 import (
@@ -22,6 +31,8 @@ func main() {
 	fmt.Println("Agência:", agencia)
 	fmt.Println("Conta:", conta)
 	fmt.Println("Saldo:", saldo)
+
+	makeOperation(contaCorrente)
 
 }
 
@@ -49,6 +60,23 @@ func readAccountData() *ContaCorrente {
 
 	return &objeto
 
+}
+
+// This function is a method of the ContaCorrente struct. It takes in a
+// float64 parameter called saque and subtracts it from the saldo field
+//of the struct. It then returns the new value of the saldo field.
+
+func (r *ContaCorrente) withdraw(saque float64) float64 {
+	r.saldo = r.saldo - saque
+	return r.saldo
+}
+
+func makeOperation(contaCorrente *ContaCorrente) {
+	fmt.Println("Informe o valor do saque:")
+	var saque float64
+	fmt.Scan(&saque)
+	contaCorrente.withdraw(saque)
+	fmt.Println("Saldo após saque:", contaCorrente.saldo)
 }
 
 type ContaCorrente struct {
