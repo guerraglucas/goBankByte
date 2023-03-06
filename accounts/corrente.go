@@ -6,10 +6,9 @@ import (
 )
 
 type ContaCorrente struct {
-	Titular u.Owner
-	Agencia int
-	Conta   int
-	saldo   float64
+	Titular        u.Owner
+	Agencia, Conta int
+	saldo          float64
 }
 
 func (r *ContaCorrente) Withdraw(saque float64) float64 {
@@ -38,10 +37,7 @@ func (r *ContaCorrente) Deposit(deposito float64) float64 {
 }
 
 func (r *ContaCorrente) ValidateDeposit(deposito float64) bool {
-	if deposito < 0 {
-		return false
-	}
-	return true
+	return deposito >= 0
 }
 
 func (r *ContaCorrente) Transfer(valor float64, contaDestino *ContaCorrente) {

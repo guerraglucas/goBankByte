@@ -13,12 +13,19 @@ func main() {
 	printIntro()
 	userLucas := u.Owner{Name: "Lucas", Age: 28, Email: "lucasguerra123@emai.com"}
 	userRhe := u.Owner{Name: "Rhe", Age: 26, Email: "rhe123@emai.com"}
+	userDummy := u.Owner{Name: "Dummy", Age: 26, Email: "dummy@email.com"}
 
 	contaCorrente := a.ContaCorrente{Titular: userLucas, Agencia: 123, Conta: 123}
 	contaDestinoTransferencia := a.ContaCorrente{Titular: userRhe, Agencia: 123, Conta: 123}
+	contaPoupanca := a.ContaPoupanca{Titular: userDummy, Agencia: 123, Conta: 123, Operacao: 123}
 
 	contaCorrente.Deposit(100)
-	fmt.Println("Saldo da conta:", contaCorrente.GetBalance())
+	contaPoupanca.Deposit(100)
+	fmt.Println("Saldo da contaCorrente:", contaCorrente.GetBalance())
+	fmt.Println("Saldo da contaPoupanca:", contaPoupanca.GetBalance())
+
+	PayBill(&contaCorrente, 60)
+	fmt.Println("Saldo da contaCorrente:", contaCorrente.GetBalance())
 
 	printMenu()
 	operationSelected := readOperationSelected()
@@ -56,26 +63,6 @@ func readOperationSelected() int {
 	return operationSelected
 }
 
-// func readAccountData() *a.ContaCorrente {
-// 	var contaCorrente *a.ContaCorrente = new(a.ContaCorrente)
-// 	reader := bufio.NewReader(os.Stdin)
-// 	objeto := *contaCorrente
-
-// 	fmt.Println("Informe o titular da conta:")
-// 	titular, _ := reader.ReadString('\n')
-// 	objeto.Titular.Name = titular
-
-// 	fmt.Println("Informe o número da agência:")
-// 	fmt.Scan(&objeto.Agencia)
-// 	fmt.Println("Informe o número da conta:")
-// 	fmt.Scan(&objeto.Conta)
-// 	// fmt.Println("Informe o saldo da conta:")
-// 	// fmt.Scan(&objeto)
-
-// 	return &objeto
-
-// }
-
 func makeWithdraw(contaCorrente *a.ContaCorrente) {
 	fmt.Println("Informe o valor do saque:")
 	var saque float64
@@ -98,4 +85,12 @@ func makeTransfer(contaCorrente *a.ContaCorrente, contaDestino *a.ContaCorrente)
 	fmt.Scan(&valor)
 	contaCorrente.Transfer(valor, contaDestino)
 	// fmt.Println("Saldo após transferência:", contaCorrente.Saldo)
+}
+
+func PayBill(conta paymentAccount, billAmount float64) {
+	conta.Withdraw(billAmount)
+}
+
+type paymentAccount interface {
+	Withdraw(saque float64) float64
 }
