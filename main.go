@@ -66,16 +66,27 @@ func readAccountData() *ContaCorrente {
 // float64 parameter called saque and subtracts it from the saldo field
 //of the struct. It then returns the new value of the saldo field.
 
-func (r *ContaCorrente) withdraw(saque float64) float64 {
-	r.saldo = r.saldo - saque
+func (r *ContaCorrente) Withdraw(saque float64) float64 {
+	if r.ValidateWithdraw(saque) {
+		r.saldo = r.saldo - saque
+	} else {
+		fmt.Println("Saldo insuficiente")
+	}
 	return r.saldo
+}
+
+func (r *ContaCorrente) ValidateWithdraw(saque float64) bool {
+	if saque > r.saldo {
+		return false
+	}
+	return true
 }
 
 func makeOperation(contaCorrente *ContaCorrente) {
 	fmt.Println("Informe o valor do saque:")
 	var saque float64
 	fmt.Scan(&saque)
-	contaCorrente.withdraw(saque)
+	contaCorrente.Withdraw(saque)
 	fmt.Println("Saldo após saque:", contaCorrente.saldo)
 }
 
