@@ -17,28 +17,43 @@ import (
 
 func main() {
 	printIntro()
-	contaCorrente := readAccountData()
-	titular, agencia, conta, saldo := contaCorrente.titular, contaCorrente.agencia, contaCorrente.conta, contaCorrente.saldo
-	var valor int = 45
-	var ptr *int = &valor
+	contaCorrente := ContaCorrente{titular: "Lucas", agencia: 123, conta: 123, saldo: 100}
+	contaDestinoTransferencia := ContaCorrente{titular: "Rhe", agencia: 123, conta: 123, saldo: 100}
 
-	fmt.Println("valor do ponteiro: ", *ptr)
-	fmt.Println("valor da variavel: ", valor)
-
-	fmt.Println("endereco do ponteiro: ", &ptr)
-	fmt.Println("endereco da variavel: ", &valor)
-	fmt.Println("Titular:", titular)
-	fmt.Println("Agência:", agencia)
-	fmt.Println("Conta:", conta)
-	fmt.Println("Saldo:", saldo)
-
-	makeOperation(contaCorrente)
+	printMenu()
+	operationSelected := readOperationSelected()
+	switch operationSelected {
+	case 1:
+		makeWithdraw(&contaCorrente)
+	case 2:
+		makeDeposit(&contaCorrente)
+	case 3:
+		makeTransfer(&contaCorrente, &contaDestinoTransferencia)
+	case 4:
+		fmt.Println("Obrigado por utilizar nossos serviços!")
+		os.Exit(0)
+	default:
+		fmt.Println("Operação inválida!")
+		os.Exit(-1)
+	}
 
 }
 
 func printIntro() {
 	fmt.Println("Bem vindo ao Bytebank")
-	fmt.Println("Informe os dados da conta")
+	fmt.Println("Selecione a operação desejada:")
+}
+func printMenu() {
+	fmt.Println("1 - Saque")
+	fmt.Println("2 - Depósito")
+	fmt.Println("3 - Transferência")
+	fmt.Println("4 - Sair")
+}
+
+func readOperationSelected() int {
+	var operationSelected int
+	fmt.Scan(&operationSelected)
+	return operationSelected
 }
 
 func readAccountData() *ContaCorrente {
@@ -66,12 +81,28 @@ func readAccountData() *ContaCorrente {
 // float64 parameter called saque and subtracts it from the saldo field
 //of the struct. It then returns the new value of the saldo field.
 
-func makeOperation(contaCorrente *ContaCorrente) {
+func makeWithdraw(contaCorrente *ContaCorrente) {
 	fmt.Println("Informe o valor do saque:")
 	var saque float64
 	fmt.Scan(&saque)
 	contaCorrente.Withdraw(saque)
 	fmt.Println("Saldo após saque:", contaCorrente.saldo)
+}
+
+func makeDeposit(contaCorrente *ContaCorrente) {
+	fmt.Println("Informe o valor do depósito:")
+	var deposito float64
+	fmt.Scan(&deposito)
+	contaCorrente.Deposit(deposito)
+	fmt.Println("Saldo após depósito:", contaCorrente.saldo)
+}
+
+func makeTransfer(contaCorrente *ContaCorrente, contaDestino *ContaCorrente) {
+	fmt.Println("Informe o valor da transferência:")
+	var valor float64
+	fmt.Scan(&valor)
+	contaCorrente.Transfer(valor, contaDestino)
+	fmt.Println("Saldo após transferência:", contaCorrente.saldo)
 }
 
 type ContaCorrente struct {
