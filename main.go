@@ -66,6 +66,21 @@ func readAccountData() *ContaCorrente {
 // float64 parameter called saque and subtracts it from the saldo field
 //of the struct. It then returns the new value of the saldo field.
 
+func makeOperation(contaCorrente *ContaCorrente) {
+	fmt.Println("Informe o valor do saque:")
+	var saque float64
+	fmt.Scan(&saque)
+	contaCorrente.Withdraw(saque)
+	fmt.Println("Saldo após saque:", contaCorrente.saldo)
+}
+
+type ContaCorrente struct {
+	titular string
+	agencia int
+	conta   int
+	saldo   float64
+}
+
 func (r *ContaCorrente) Withdraw(saque float64) float64 {
 	if r.ValidateWithdraw(saque) {
 		r.saldo = r.saldo - saque
@@ -82,17 +97,27 @@ func (r *ContaCorrente) ValidateWithdraw(saque float64) bool {
 	return true
 }
 
-func makeOperation(contaCorrente *ContaCorrente) {
-	fmt.Println("Informe o valor do saque:")
-	var saque float64
-	fmt.Scan(&saque)
-	contaCorrente.Withdraw(saque)
-	fmt.Println("Saldo após saque:", contaCorrente.saldo)
+func (r *ContaCorrente) Deposit(deposito float64) float64 {
+	if r.ValidateDeposit(deposito) {
+		r.saldo = r.saldo + deposito
+	} else {
+		fmt.Println("Não foi possível realizar o depósito")
+	}
+	return r.saldo
 }
 
-type ContaCorrente struct {
-	titular string
-	agencia int
-	conta   int
-	saldo   float64
+func (r *ContaCorrente) ValidateDeposit(deposito float64) bool {
+	if deposito < 0 {
+		return false
+	}
+	return true
+}
+
+func (r *ContaCorrente) Transfer(valor float64, contaDestino *ContaCorrente) {
+	if r.ValidateWithdraw(valor) {
+		r.Withdraw(valor)
+		contaDestino.Deposit(valor)
+	} else {
+		fmt.Println("Não foi possível realizar a transferência")
+	}
 }
