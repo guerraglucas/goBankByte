@@ -1,8 +1,8 @@
 package main
 
 import (
-	a "github.com/guerraglucas/aula-2-oop-go/accounts"
-	u "github.com/guerraglucas/aula-2-oop-go/users"
+	a "github.com/guerraglucas/goBankByte/accounts"
+	u "github.com/guerraglucas/goBankByte/users"
 
 	// "bufio"
 	"fmt"

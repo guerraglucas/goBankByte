@@ -1,3 +1,3 @@
-module aula-2-oop-go
+module goByteBank
 
 go 1.20

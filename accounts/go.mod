@@ -1,3 +1,3 @@
-module github.com/guerraglucas/aula-2-oop-go/accounts
+module github.com/guerraglucas/goByteBank/accounts
 
 go 1.20

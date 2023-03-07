@@ -1,3 +1,3 @@
-module github.com/guerraglucas/aula-2-oop-go/users
+module github.com/guerraglucas/goByteBank/users
 
 go 1.20
