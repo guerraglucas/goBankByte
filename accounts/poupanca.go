@@ -1,8 +1,9 @@
 package accounts
 
 import (
-	u "aula-2-oop-go/users"
 	"fmt"
+
+	u "github.com/guerraglucas/aula-2-oop-go/users"
 )
 
 type ContaPoupanca struct {
