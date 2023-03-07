@@ -3,7 +3,7 @@ package accounts
 import (
 	"fmt"
 
-	u "github.com/guerraglucas/goByteBank/users"
+	u "github.com/guerraglucas/goBankByte/users"
 )
 
 type ContaPoupanca struct {
